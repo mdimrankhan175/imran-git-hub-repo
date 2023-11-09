@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import './RepositoryDetail.css' // Import CSS here
+import {Link, useParams} from 'react-router-dom'
 
-function RepositoryDetail({match}) {
-  const {owner, repo} = match.params
+function RepositoryDetail() {
+  const {owner, name} = useParams()
   const [repository, setRepository] = useState(null)
 
   useEffect(() => {
-    // Fetch the data for the specific repository
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}`
+    const apiUrl = `https://api.github.com/repos/${owner}/${name}`
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => setRepository(data))
       .catch(error => console.error('Error fetching data:', error))
-  }, [owner, repo])
+  }, [owner, name])
 
   if (!repository) {
     return <div>Loading...</div>
@@ -31,8 +31,9 @@ function RepositoryDetail({match}) {
         <p>Stars: {repository.stargazers_count}</p>
         <p>Issues: {repository.open_issues_count}</p>
         <p>Last Pushed: {repository.pushed_at}</p>
+        <p>Owner Name: {repository.owner.login}</p>
       </div>
-      <p className="owner-name">Owner: {repository.owner.login}</p>
+      <Link to="/">Back to List</Link>
     </div>
   )
 }

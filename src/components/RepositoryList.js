@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import './RepositoryList.css' // Import CSS here
+import {Link} from 'react-router-dom'
 
 function RepositoryList() {
-  const [repositories, setRepositories] = useState([]) // Initialize with an empty array
+  const [repositories, setRepositories] = useState([])
   const [page, setPage] = useState(1)
 
   useEffect(() => {
-    // Fetch the data from the GitHub API
-    const apiUrl = `https://api.github.com/search/repositories?q=created:>2023-10-09&sort=stars&order=desc&page=${page}`
+    const oneMonthAgo = new Date()
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+
+    const apiUrl = `https://api.github.com/search/repositories?q=created:>${oneMonthAgo.toISOString()}&sort=stars&order=desc&page=${page}`
     fetch(apiUrl)
       .then(response => response.json())
-      .then(data => setRepositories(data.items || [])) // Ensure data.items is defined or provide an empty array
+      .then(data => setRepositories(data.items || []))
       .catch(error => console.error('Error fetching data:', error))
   }, [page])
 
@@ -30,9 +33,10 @@ function RepositoryList() {
             <div className="repository-details">
               <p>Stars: {repo.stargazers_count}</p>
               <p>Issues: {repo.open_issues_count}</p>
-              <p>
-                Last Pushed: {repo.pushed_at} by {repo.owner.login}
-              </p>
+              <p>Last Pushed: {repo.pushed_at}</p>
+              <Link to={`/repo/${repo.owner.login}/${repo.name}`}>
+                View Details
+              </Link>
             </div>
           </div>
         ))}
