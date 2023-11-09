@@ -1,6 +1,11 @@
 /* src/components/RepositoryList.css */
 
 /* Container for the list of repositories */
+
+.repository-list-heading {
+  text-align: center;
+}
+
 .repository-list {
   display: flex;
   flex-wrap: wrap;

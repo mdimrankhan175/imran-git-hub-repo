@@ -1,3 +1,7 @@
+.repository-list-heading {
+  text-align: center;
+}
+
 .repo-list {
   display: flex;
   flex-wrap: wrap;
