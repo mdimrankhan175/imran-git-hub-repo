@@ -30,7 +30,9 @@ function RepositoryList() {
             <div className="repository-details">
               <p>Stars: {repo.stargazers_count}</p>
               <p>Issues: {repo.open_issues_count}</p>
-              <p>Last Pushed: {repo.pushed_at}</p>
+              <p>
+                Last Pushed: {repo.pushed_at} by {repo.owner.login}
+              </p>
             </div>
           </div>
         ))}
