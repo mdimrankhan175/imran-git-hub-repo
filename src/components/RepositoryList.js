@@ -34,6 +34,8 @@ function RepositoryList() {
               <p>Stars: {repo.stargazers_count}</p>
               <p>Issues: {repo.open_issues_count}</p>
               <p>Last Pushed: {repo.pushed_at}</p>
+              <p>by {repo.owner.login}</p>
+
               <Link to={`/repo/${repo.owner.login}/${repo.name}`}>
                 View Details
               </Link>
